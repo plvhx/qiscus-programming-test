@@ -1,4 +1,5 @@
 import logging
+import json
 
 from flask import Flask
 from flask import jsonify
@@ -16,7 +17,10 @@ def hello_world():
 
 @app.route('/callback', methods=['POST'])
 def agent_callback():
-	app.logger.info(request.data)
+	data = json.loads(request.data.decode())
+
+	app.logger.info(json.dumps(data['candidate_agent']));
+
 	return jsonify({
 		'data': {
 			'agent': {
