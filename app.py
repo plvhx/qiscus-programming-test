@@ -5,7 +5,7 @@ from flask import jsonify
 from flask import request
 
 app = Flask(__name__)
-logger = logging.GetLogger('gunicorn.error')
+logger = logging.getLogger('gunicorn.error')
 
 app.logger.handlers = logger.handlers
 app.logger.level = logger.level
