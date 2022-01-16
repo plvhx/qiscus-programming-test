@@ -9,5 +9,5 @@ def hello_world():
 
 @app.route('/callback', methods=['POST'])
 def agent_callback():
-	open('/tmp/req', 'wb').write(request.data)
+	open('/tmp/req', 'wb').write(bytes(request.data.encode('utf-8')))
 	return 'Will be processed.'
