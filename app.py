@@ -10,7 +10,7 @@ def hello_world():
 
 @app.route('/callback', methods=['POST'])
 def agent_callback():
-	open('/tmp/req', 'wb').write(bytes(request.data.encode('utf-8')))
+	open('/tmp/req', 'wb').write(request.data)
 	return jsonify({
 		'data': {
 			'agent': {
@@ -20,10 +20,10 @@ def agent_callback():
 				'email': 'bill@gmail.com',
 				'sdk_key': '2xxxxxxxxxxxea743',
 				'type': 2,
-				'is_available': false,
-				'avatar_uri': null,
-				'is_verified': false,
-				'force_offline': false,
+				'is_available': False,
+				'avatar_uri': None,
+				'is_verified': False,
+				'force_offline': False,
 				'count': 0
 			}
 		}
