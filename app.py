@@ -7,7 +7,7 @@ app = Flask(__name__)
 def hello_world():
 	return 'Hello, World!'
 
-@app.route('/callback')
+@app.route('/callback', methods=['POST'])
 def agent_callback():
 	open('/tmp/req', 'wb').write(request.data)
 	return 'Will be processed.'
