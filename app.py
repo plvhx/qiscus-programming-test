@@ -17,23 +17,24 @@ def hello_world():
 
 @app.route('/callback', methods=['POST'])
 def agent_callback():
-	data = json.loads(request.data.decode())
+	data  = json.loads(request.data.decode())
+	agent = data['candidate_agent']
 
 	app.logger.info(json.dumps(data['candidate_agent']));
 
 	return jsonify({
 		'data': {
 			'agent': {
-				'id': 1776,
-				'name': 'Bill Tanthowi Jauhari',
-				'sdk_email': 'Ny83g_bill@gmail.com',
-				'email': 'bill@gmail.com',
-				'sdk_key': '2xxxxxxxxxxxea743',
-				'type': 2,
-				'is_available': False,
-				'avatar_uri': None,
-				'is_verified': False,
-				'force_offline': False,
+				'id': agent['id'],
+				'name': agent['name'],
+				'sdk_email': agent['sdk_email'],
+				'email': agent['email'],
+				'sdk_key': agent['sdk_key'],
+				'type': agent['type'],
+				'is_available': agent['is_available'],
+				'avatar_url': agent['avatar_url'],
+				'is_verified': agent['is_verified'],
+				'force_offline': agent['force_offline'],
 				'count': 0
 			}
 		}
