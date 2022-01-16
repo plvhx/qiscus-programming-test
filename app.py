@@ -1,8 +1,14 @@
+import logging
+
 from flask import Flask
 from flask import jsonify
 from flask import request
 
 app = Flask(__name__)
+logger = logging.GetLogger('gunicorn.error')
+
+app.logger.handlers = logger.handlers
+app.logger.level = logger.level
 
 @app.route('/')
 def hello_world():
@@ -10,7 +16,7 @@ def hello_world():
 
 @app.route('/callback', methods=['POST'])
 def agent_callback():
-	open('/tmp/req', 'wb').write(request.data)
+	app.logger.info(request.data)
 	return jsonify({
 		'data': {
 			'agent': {
