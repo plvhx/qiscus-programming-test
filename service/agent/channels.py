@@ -1,0 +1,6 @@
+WHATSAPP = 'wa'
+FACEBOOK = 'fb'
+LINE = 'line'
+QISCUS = 'qiscus'
+CUSTOM = 'custom_channel'
+TELEGRAM = 'telegram'
