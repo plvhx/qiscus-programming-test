@@ -60,8 +60,14 @@ def agent_callback():
 
 	app.logger.info(json.dumps(data))
 	app.logger.info(json.dumps(data['candidate_agent']));
+	app.logger.info(agent['id'])
+	app.logger.info(int(data['room_id']))
 
-	if assign_agent_to_room(agent['id'], int(data['room_id'])) == False:
+	response = assign_agent_to_room(agent['id'], int(data['room_id']))
+
+	app.logger.info(response)
+
+	if response == False:
 		return jsonify({
 			'message': 'There was an error when trying to assign agent to specified room.'
 		}), 400
