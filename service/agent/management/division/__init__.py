@@ -34,6 +34,7 @@ class Division(Abstract):
 			query.append('limit=%d' % (limit))
 
 		url = url + '?' + '&'.join(query)
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -59,6 +60,8 @@ class Division(Abstract):
 				'Missing header name \'Qiscus-App-Id\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, data)
 
 	def show_division(self, division_id, headers=None):
@@ -82,6 +85,8 @@ class Division(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header name \'Qiscus-App-Id\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -107,6 +112,8 @@ class Division(Abstract):
 				'Missing header \'Qiscus-App-Id\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url)
 
 	def update_division(self, division_id, data, headers=None):
@@ -131,6 +138,8 @@ class Division(Abstract):
 				'Missing header \'Qiscus-App-Id\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, data)
 
 	def delete_division(self, division_id, headers=None):
@@ -154,3 +163,7 @@ class Division(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header \'Qiscus-App-Id\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
+
+		return self.get_client().post(url)

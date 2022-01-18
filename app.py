@@ -16,6 +16,23 @@ app.logger.level = logger.level
 
 factory = ServiceFactory(Client(conf.BASE_URL))
 
+def get_agent_auth_token(id):
+	headers  = {
+		'Content-Type': 'application/json',
+		'Qiscus-App-Id': conf.APP_ID,
+		'Qiscus-Secret-Key': conf.APP_SECRET
+	}
+	response = factory \
+		.get_agent_management() \
+		.get_agent_by_ids([id], headers)
+
+	if response == None:
+		return False
+
+	return response['data'][0]['authentication_token']
+
+# print(get_agent_auth_token(152525))
+
 @app.route('/')
 def hello_world():
 	return 'Hello, World!'
@@ -25,6 +42,7 @@ def agent_callback():
 	data  = json.loads(request.data.decode())
 	agent = data['candidate_agent']
 
+	app.logger.info(json.dumps(data))
 	app.logger.info(json.dumps(data['candidate_agent']));
 
 	return jsonify({

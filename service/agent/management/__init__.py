@@ -34,8 +34,9 @@ class Management(Abstract):
 				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
 			) from e
 
-		norm = map(lambda x: 'ids[]={}'.format(str(x)), ids)
+		norm = list(map(lambda x: 'ids[]=%d' % (x), ids))
 		url  = url + '?' + '&'.join(norm if len(norm) != 0 else ['ids[]='])
+		url  = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -77,6 +78,7 @@ class Management(Abstract):
 			query.append('scope={}'.format(scope))
 
 		url = url + '?' + '&'.join(query)
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -121,6 +123,7 @@ class Management(Abstract):
 		query.append(map(lambda x: 'division_ids[]={}'.format(str(x)), division_ids))
 
 		url = url + '?' + '&'.join(query)
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -153,6 +156,7 @@ class Management(Abstract):
 				'Missing header name \'Qiscus-App-Id\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().post(url, payload)
 
@@ -185,6 +189,8 @@ class Management(Abstract):
 				'Missing header name \'Qiscus-App-Id\' from headers list.'
 			)
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, payload)
 
 	def delete_agent(self, agent_id, payload, headers=None):
@@ -216,6 +222,8 @@ class Management(Abstract):
 				'Missing header name \'Qiscus-App-Id\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, payload)
 
 	def get_agent(self, user_id, headers=None):
@@ -246,6 +254,8 @@ class Management(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header name \'Qiscus-App-Id\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -279,5 +289,6 @@ class Management(Abstract):
 			query.append('channel={}'.format(channel))
 
 		url = url = '?' + '&'.join(query)
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)

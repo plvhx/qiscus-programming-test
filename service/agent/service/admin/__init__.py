@@ -33,6 +33,8 @@ class Admin(Abstract):
 				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, data)
 
 	def remove_agent(self, data, headers=None):
@@ -63,6 +65,8 @@ class Admin(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().post(url, data)
 
@@ -95,6 +99,8 @@ class Admin(Abstract):
 				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, data)
 
 	def set_sessional_room(self, data, headers=None):
@@ -125,6 +131,8 @@ class Admin(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().post(url, data)
 
@@ -157,6 +165,8 @@ class Admin(Abstract):
 				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, data)
 
 	def allocate_and_assign_agent(self, data, headers=None):
@@ -180,6 +190,8 @@ class Admin(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().post(url, data)
 
@@ -226,6 +238,7 @@ class Admin(Abstract):
 			query.append('search=%s' % (search))
 
 		url = url + '?' + '&'.join(query)
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -272,6 +285,7 @@ class Admin(Abstract):
 			query.append('is_available_in_room=%s' % ('true' if is_available_in_room == True else 'false'))
 
 		url = url + '?' + '&'.join(query)
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -296,6 +310,8 @@ class Admin(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header name \'Qiscus-App-Id\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -327,5 +343,7 @@ class Admin(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
 			)
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)

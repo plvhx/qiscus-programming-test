@@ -11,14 +11,14 @@ class ServiceFactory(object):
 	def get_client(self):
 		return self.client
 
-	def get_management(self):
+	def get_agent_management(self):
 		return Management(self.get_client())
 
-	def get_division(self):
+	def get_agent_management_division(self):
 		return Division(self.get_client())
 
-	def get_admin(self):
+	def get_agent_service_admin(self):
 		return Admin(self.get_client())
 
-	def get_agent(self):
+	def get_agent_service_agent(self):
 		return Agent(self.get_client())

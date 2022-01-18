@@ -45,6 +45,8 @@ class Agent(Abstract):
 				'Content-Type value must be \'application/x-www-form-urlencoded\'.'
 			)
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, data)
 
 	def mark_as_resolved(self, data, headers=None):
@@ -76,6 +78,8 @@ class Agent(Abstract):
 				'Missing header \'Qiscus-App-Id\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url, data)
 
 	def takeover_status(self, headers=None):
@@ -99,6 +103,8 @@ class Agent(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header \'Qiscus-App-Id\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -145,6 +151,7 @@ class Agent(Abstract):
 			query.append('is_available_in_room=%s' % ('true' if is_available_in_room == True else 'false'))
 
 		url = url + '?' + '&'.join(query)
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
 
@@ -170,6 +177,8 @@ class Agent(Abstract):
 				'Missing header \'Qiscus-App-Id\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().get(url)
 
 	def takeover_unserved(self, headers=None):
@@ -194,6 +203,8 @@ class Agent(Abstract):
 				'Missing header \'Qiscus-App-Id\' from headers list.'
 			) from e
 
+		url = self.get_client().get_base_url() + url
+
 		return self.get_client().post(url)
 
 	def add_agent(self, data, headers=None):
@@ -217,6 +228,8 @@ class Agent(Abstract):
 			raise IncompleteRequiredHeaderException(
 				'Missing header \'Qiscus-App-Id\' from headers list.'
 			) from e
+
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().post(url)
 
@@ -257,5 +270,6 @@ class Agent(Abstract):
 			query.append('limit=%d' % (limit))
 
 		url = url + '?' + '&'.join(query)
+		url = self.get_client().get_base_url() + url
 
 		return self.get_client().get(url)
