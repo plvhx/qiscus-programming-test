@@ -40,7 +40,7 @@ def assign_agent_to_room(agent_id, room_id):
 	data = {
 		'room_id': room_id,
 		'agent_id': agent_id,
-		'replace_latest_agent': False,
+		'replace_latest_agent': 'false',
 		'max_agent': 1
 	}
 	response = factory \
