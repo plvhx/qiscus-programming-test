@@ -1,2 +1,2 @@
-ASCENDING = 'asc'
-DESCENDING = 'desc'
+ASCENDING = "asc"
+DESCENDING = "desc"

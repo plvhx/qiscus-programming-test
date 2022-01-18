@@ -1,3 +1,3 @@
-DIVISION = 'division'
-NAME = 'name'
-EMAIL = 'email'
+DIVISION = "division"
+NAME = "name"
+EMAIL = "email"

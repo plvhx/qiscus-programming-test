@@ -1,8 +1,10 @@
 class IncompleteRequiredHeaderException(Exception):
-	pass
+    pass
+
 
 class HeaderValueViolationException(Exception):
-	pass
+    pass
+
 
 class TypeErrorException(Exception):
-	pass
+    pass
