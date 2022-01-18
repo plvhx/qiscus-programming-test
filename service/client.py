@@ -4,17 +4,20 @@ import requests
 import service.client_method as m
 
 class Client(object):
-	def __init__(self):
+	def __init__(self, base_url=''):
 		self.headers = {}
+		self.base_url = base_url
 
 	def get_headers(self):
 		return self.headers
 
 	def set_headers(self, headers):
 		self.headers = headers
+		return self
 
 	def add_header(self, key, value):
 		self.headers[key] = value
+		return self
 
 	def get_header(self, key):
 		try:
@@ -23,6 +26,13 @@ class Client(object):
 			return None
 
 		return self.headers[key]
+
+	def get_base_url(self):
+		return self.base_url
+
+	def set_base_url(self, base_url):
+		self.base_url = base_url
+		return self
 
 	def is_json(self, headers):
 		return True if headers['Content-Type'] == 'application/json' else False

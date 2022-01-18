@@ -2,18 +2,66 @@ import service.agent.channels as c
 import service.agent.scope as s
 import service.agent.sort_mode as smod
 from service.abstract import Abstract
+from service.exception import IncompleteRequiredHeaderException
 
 class Management(Abstract):
-	def get_agent_by_ids(self, ids):
-		norm    = map(lambda x: 'ids[]={}'.format(str(x)), ids)
-		unified = '/api/v1/admin/agents/get_by_ids?' + '&'.join(norm if len(norm) != 0 else ['ids[]='])
-		url     = self.get_base_url() + unified
+	def get_agent_by_ids(self, ids, headers=None):
+		url  = '/api/v1/admin/agents/get_by_ids'
+
+		if isinstance(headers, dict):
+			self.get_client().set_headers(headers)
+
+		headers = self.get_client().get_headers()
+
+		try:
+			headers['Content-Type']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Content-Type\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-App-Id']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-App-Id\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-Secret-Key']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-Secret-Key\' from headers list.'
+			) from e
+
+		norm = map(lambda x: 'ids[]={}'.format(str(x)), ids)
+		url  = url + '?' + '&'.join(norm if len(norm) != 0 else ['ids[]='])
 
 		return self.get_client().get(url)
 
-	def get_all_agents(self, page=None, limit=None, search=None, scope=None):
+	def get_all_agents(self, page=None, limit=None,
+		                     search=None, scope=None, headers=None):
 		url   = '/api/v2/admin/agents'
 		query = []
+
+		if isinstance(headers, dict):
+			self.get_client().set_headers(headers)
+
+		headers = self.get_client().get_headers()
+
+		try:
+			headers['Authorization']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Authorization\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-App-Id']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-App-Id\' from headers list.'
+			) from e
 
 		if isinstance(page, int):
 			query.append('page={}'.format(str(page)))
@@ -33,9 +81,29 @@ class Management(Abstract):
 		return self.get_client().get(url)
 
 	def get_agents_by_division(self, division_ids, page=None,
-		                             limit=None, is_available=None, sort=None):
+		                             limit=None, is_available=None,
+		                             sort=None, headers=None):
 		url   = '/api/v2/admin/agents/by_division'
 		query = []
+
+		if isinstance(headers, dict):
+			self.get_client().set_headers(headers)
+
+		headers = self.get_client().get_headers()
+
+		try:
+			headers['Authorization']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Authorization\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-App-Id']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-App-Id\' from headers list.'
+			) from e
 
 		if isinstance(page, int):
 			query.append('page={}'.format(str(page)))
@@ -56,25 +124,153 @@ class Management(Abstract):
 
 		return self.get_client().get(url)
 
-	def create_agent(self, payload):
+	def create_agent(self, payload, headers=None):
 		url = '/api/v2/admin/create_agent'
+
+		if isinstance(headers, dict):
+			self.get_client().set_headers(headers)
+
+		headers = self.get_client().get_headers()
+
+		try:
+			headers['Authorization']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Authorization\' from headers list.'
+			) from e
+
+		try:
+			headers['Content-Type']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Content-Type\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-App-Id']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-App-Id\' from headers list.'
+			) from e
+
+
 		return self.get_client().post(url, payload)
 
-	def update_agent(self, agent_id, payload):
+	def update_agent(self, agent_id, payload, headers=None):
 		url = '/api/v2/admin/agent/{}/update'.format(str(agent_id))
+
+		if isinstance(headers, dict):
+			self.get_client().set_headers(headers)
+
+		headers = self.get_client().get_headers()
+
+		try:
+			headers['Authorization']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Authorization\' from headers list.'
+			) from e
+
+		try:
+			headers['Content-Type']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Content-Type\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-App-Id']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-App-Id\' from headers list.'
+			)
+
 		return self.get_client().post(url, payload)
 
-	def delete_agent(self, agent_id, payload):
+	def delete_agent(self, agent_id, payload, headers=None):
 		url = '/api/v1/admin/agent/{}/delete'.format(str(agent_id))
+
+		if isinstance(headers, dict):
+			self.get_client().set_headers(headers)
+
+		headers = self.get_client().get_headers()
+
+		try:
+			headers['Authorization']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Authorization\' from headers list.'
+			) from e
+
+		try:
+			headers['Content-Type']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Content-Type\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-App-Id']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-App-Id\' from headers list.'
+			) from e
+
 		return self.get_client().post(url, payload)
 
-	def get_agent(self, user_id):
+	def get_agent(self, user_id, headers=None):
 		url = '/api/v2/admin/agent/{}'.format(str(user_id))
+
+		if isinstance(headers, dict):
+			self.get_client().set_headers(headers)
+
+		headers = self.get_client().get_headers()
+
+		try:
+			headers['Authorization']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Authorization\' from headers list.'
+			) from e
+
+		try:
+			headers['Content-Type']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Content-Type\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-App-Id']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-App-Id\' from headers list.'
+			) from e
+
 		return self.get_client().get(url)
 
-	def get_user_channel(self, user_id, channel=None):
+	def get_user_channel(self, user_id, channel=None, headers=None):
 		url   = '/api/v2/admin/agent/{}/channels'.format(str(user_id))
 		query = []
+
+		if isinstance(headers, dict):
+			self.get_client().set_headers(headers)
+
+		headers = self.get_client().get_headers()
+
+		try:
+			headers['Authorization']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Authorization\' from headers list.'
+			) from e
+
+		try:
+			headers['Qiscus-App-Id']
+		except KeyError as e:
+			raise IncompleteRequiredHeaderException(
+				'Missing header name \'Qiscus-App-Id\' from headers list.'
+			) from e
 
 		if isinstance(channel, str) and \
 		   (channel == c.WHATSAPP or channel == c.FACEBOOK or \

@@ -1,15 +1,20 @@
 import logging
 import json
+import service.config as conf
 
 from flask import Flask
 from flask import jsonify
 from flask import request
+from service.client import Client
+from service.factory import ServiceFactory
 
 app = Flask(__name__)
 logger = logging.getLogger('gunicorn.error')
 
 app.logger.handlers = logger.handlers
 app.logger.level = logger.level
+
+factory = ServiceFactory(Client(conf.BASE_URL))
 
 @app.route('/')
 def hello_world():
