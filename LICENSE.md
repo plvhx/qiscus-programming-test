@@ -1,6 +1,6 @@
 BSD 2-Clause License
 
-Copyright (c) 2022, Paulus Gandung Prakosa <gandung@lists.infradead.org>
+Copyright (c) 2022, Paulus Gandung Prakosa (gandung@lists.infradead.org)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
