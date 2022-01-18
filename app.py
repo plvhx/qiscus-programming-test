@@ -17,7 +17,7 @@ app.logger.level = logger.level
 factory = ServiceFactory(Client(conf.BASE_URL))
 
 def get_agent_auth_token(id):
-	headers  = {
+	headers = {
 		'Content-Type': 'application/json',
 		'Qiscus-App-Id': conf.APP_ID,
 		'Qiscus-Secret-Key': conf.APP_SECRET
@@ -31,7 +31,23 @@ def get_agent_auth_token(id):
 
 	return response['data'][0]['authentication_token']
 
-# print(get_agent_auth_token(152525))
+def assign_agent_to_room(agent_id, room_id):
+	headers = {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'Qiscus-App-Id': conf.APP_ID,
+		'Qiscus-Secret-Key': conf.APP_SECRET
+	}
+	data = {
+		'room_id': room_id,
+		'agent_id': agent_id,
+		'replace_latest_agent': False,
+		'max_agent': 1
+	}
+	response = factory \
+		.get_agent_service_admin() \
+		.assign_agent(data, headers)
+
+	return False if response == None else response
 
 @app.route('/')
 def hello_world():
@@ -44,6 +60,11 @@ def agent_callback():
 
 	app.logger.info(json.dumps(data))
 	app.logger.info(json.dumps(data['candidate_agent']));
+
+	if assign_agent_to_room(agent['id'], int(data['room_id'])) == False:
+		return jsonify({
+			'message': 'There was an error when trying to assign agent to specified room.'
+		}), 400
 
 	return jsonify({
 		'data': {
